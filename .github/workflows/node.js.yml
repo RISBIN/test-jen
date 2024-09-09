@@ -19,7 +19,7 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -i /home/risbin/.ssh/id_rsa.pub -o StrictHostKeyChecking=no ubuntu@13.201.166.164
+          ssh -o StrictHostKeyChecking=no ubuntu@13.201.166.164 << 'EOF'
             cd /var/www/production
             git pull origin main
             npm install
