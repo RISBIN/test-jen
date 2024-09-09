@@ -37,12 +37,6 @@ jobs:
           # Install dependencies
           sudo npm install
           
-          # Ensure PM2 is installed and accessible
-          if ! command -v pm2 &> /dev/null
-          then
-              sudo npm install -g pm2
-          fi
-          
           # Start or restart the PM2 process, ensuring it's named 'production'
-          pm2 start npm --name production -- start || pm2 restart production
+          pm2 restart production
           EOF
