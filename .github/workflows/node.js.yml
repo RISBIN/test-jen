@@ -19,7 +19,7 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@your-ec2-public-ip << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@13.201.166.164 << 'EOF'
             cd /var/www/production
             git pull origin main
             npm install
