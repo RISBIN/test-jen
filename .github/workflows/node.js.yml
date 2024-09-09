@@ -1,0 +1,27 @@
+name: Deploy Application
+
+on:
+  push:
+    branches:
+      - main  # Specify the branch you want to trigger the workflow
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ec2-user@your-ec2-public-ip << 'EOF'
+            cd /var/www/production
+            git pull origin main
+            npm install
+            pm2 restart production
+          EOF
