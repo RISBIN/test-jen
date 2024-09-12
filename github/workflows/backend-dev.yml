@@ -1,0 +1,33 @@
+name: Deploy to DigitalOcean (Backend Dev Branch)
+
+on:
+  push:
+    branches:
+      - backend-dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.ISG }}
+
+    - name: Deploy to DigitalOcean (Backend Dev)
+      run: |
+        REMOTE_PATH="/var/www/isg-dev"
+        PM2_APP="isg-dev"
+        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@143.244.128.106 << EOF
+          cd $REMOTE_PATH
+          git pull origin backend-dev
+          npm install
+          pm2 restart $PM2_APP
+        EOF
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.ISG }}
+
