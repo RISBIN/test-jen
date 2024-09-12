@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-// Serve static files from the 'public' directory
+// Serve static files from the 'public' directory   vsdfsdsdvsd
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Route to serve the main HTML file
